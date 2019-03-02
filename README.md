@@ -3,7 +3,7 @@ An implementation of A* for the 8-square game for Intelligent Systems.
 
 ## Authors
 * Austin Bohannon [18286119]
-* Niall Dillane []
+* Niall Dillane [13132911]
 * Adam O'Mahony []
 
 ## Build
