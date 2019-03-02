@@ -1,6 +1,6 @@
 /*
  * Austin Bohannon [18286119]
- * Niall Dillane []
+ * Niall Dillane [13132911]
  * Adam O'Mahony []
  *
  * This is the Interim Submission.
@@ -146,10 +146,10 @@ public class A_Star {
 		// Set goal board
 		State.setEndBoard(new short[] {1, 2, 3, 4, 5, 6, 7, 8, 0});
 		// Create starting State
-		State state = new State(null, short[] {1, 2, 3, 4, 5, 6, 7, 8}, 0);
+		State state = new State(null, new short[] {1, 2, 3, 4, 5, 6, 7, 8, 0}, 0);
 		// Print starting state
 		System.out.println(state);
-		System.out.println();
+		System.out.println("=====\n");
 
 		// Print all children states
 		for(State i : state.getNextStates()) {
