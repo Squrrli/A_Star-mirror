@@ -3,7 +3,7 @@ An implementation of A* for the 8-square game for Intelligent Systems.
 
 ## Authors
 * Austin Bohannon [18286119]
-* Nial Dillane []
+* Niall Dillane []
 * Adam O'Mahony []
 
 ## Build
@@ -24,11 +24,11 @@ java A_Star
     - [ ] Get first state from a JOptionPane
     - [ ] Validate all numbers in [0, 8] are represented without duplicates and are space separated
     - [ ] Get the final state from a JOptionPane and validate as well
-  - [ ] Implement game state data structure
-  - [ ] Calculate possible moves
+  - [x] Implement game state data structure
+  - [x] Calculate possible moves
     * Always either 2, 3, or 4 possible moves
-  - [ ] Calculate the *h* function for each move
-  - [ ] Print board state and *h* values to screen
+  - [x] Calculate the *h* function for each move
+  - [x] Print board state and *h* values to screen
     * Board state should be 3 x 3, not like text input
   - [ ] Ensure our names/IDs are in the files header
   - [ ] Actually submit
@@ -37,7 +37,7 @@ java A_Star
     - [ ] Email code
 - [ ] Complete second sprint *(Due: 17:00 19 April 2019)*
   - [ ] Implement A*
-    - [ ] Use move calculation to generate new states
+    - [x] Use move calculation to generate new states
     - [ ] Maintain open and closed sets
     - [ ] Sort open set by *f = g + h*
     - [ ] Each state keeps track of previous state so full path can be generated
