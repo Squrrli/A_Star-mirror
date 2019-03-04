@@ -1,7 +1,7 @@
 /*
  * Austin Bohannon [18286119]
  * Niall Dillane [13132911]
- * Adam O'Mahony []
+ * Adam O'Mahony [16187504]
  *
  * This is the Interim Submission.
  */
@@ -57,14 +57,14 @@ public class A_Star {
 			}
 
 			// Calculate next states
-			ArrayList<State> array = new ArrayList<State>();
+			ArrayList<State> possibleStates = new ArrayList<State>();
 			// Check to switch with one above
 			if (index > BOARD_WIDTH - 1) {
 				short[] newBoard = new short[BOARD_SIZE];
 				System.arraycopy(board, 0, newBoard, 0, board.length);
 				newBoard[index] = newBoard[index - BOARD_WIDTH];
 				newBoard[index - BOARD_WIDTH] = 0;
-				array.add(new State(this, newBoard, depth + 1));
+				possibleStates.add(new State(this, newBoard, depth + 1));
 			}
 			// Check to switch with one below
 			if (index < BOARD_WIDTH * (BOARD_HEIGHT - 1)) {
@@ -72,7 +72,7 @@ public class A_Star {
 				System.arraycopy(board, 0, newBoard, 0, board.length);
 				newBoard[index] = newBoard[index + BOARD_WIDTH];
 				newBoard[index + BOARD_WIDTH] = 0;
-				array.add(new State(this, newBoard, depth + 1));
+				possibleStates.add(new State(this, newBoard, depth + 1));
 			}
 			// Check to switch with one to left
 			if (index%BOARD_WIDTH > 0) {
@@ -80,7 +80,7 @@ public class A_Star {
 				System.arraycopy(board, 0, newBoard, 0, board.length);
 				newBoard[index] = newBoard[index - 1];
 				newBoard[index - 1] = 0;
-				array.add(new State(this, newBoard, depth + 1));
+				possibleStates.add(new State(this, newBoard, depth + 1));
 			}
 			// Check to switch with one to right
 			if (index%BOARD_WIDTH < BOARD_WIDTH - 1) {
@@ -88,10 +88,10 @@ public class A_Star {
 				System.arraycopy(board, 0, newBoard, 0, board.length);
 				newBoard[index] = newBoard[index + 1];
 				newBoard[index + 1] = 0;
-				array.add(new State(this, newBoard, depth + 1));
+				possibleStates.add(new State(this, newBoard, depth + 1));
 			}
 
-			return array;
+			return possibleStates;
 		}
 
 		/* getEstimatedCost
@@ -125,6 +125,7 @@ public class A_Star {
 		/* toString
 		 * Outputs the State as a String.
 		 */
+		@Override
 		public String toString() {
 			String output = "";
 			for(short i = 0; i < BOARD_SIZE; i++) {

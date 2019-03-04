@@ -4,7 +4,7 @@ An implementation of A* for the 8-square game for Intelligent Systems.
 ## Authors
 * Austin Bohannon [18286119]
 * Niall Dillane [13132911]
-* Adam O'Mahony []
+* Adam O'Mahony [16187504]
 
 ## Build
 All code should be in the single file `A_Star.java`. To compile, run:
