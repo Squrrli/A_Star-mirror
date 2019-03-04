@@ -27,17 +27,19 @@ public class A_Star {
 		static short[] endBoard;
 
 		// Private data
-		State prev; // Previous board state (null if root)
-		short[] board = new short[BOARD_SIZE]; // The board
+		State prev; // Previous board State (null if root)
+		short[] board; // The board
 		int depth; // Depth in the state tree (0 if root)
+		int heuristic;
 
 		/* Constructor
-		 * Sets local variables.
+		 * Sets variables.
 		 */
 		public State(State prev, short[] board, int depth) {
 			this.prev = prev;
 			this.board = board;
 			this.depth = depth;
+			this.heuristic = heuristic();
 		}
 
 		/* getNextStates
@@ -98,7 +100,7 @@ public class A_Star {
 		 * Returns f = g + h.
 		 */
 		public int getEstimatedCost() {
-			return depth + heuristic();
+			return depth + heuristic;
 		}
 
 		/* setEndBoard
@@ -111,6 +113,7 @@ public class A_Star {
 		/* heuristic
 		 * Calculates the heuristic function for this state.
 		 * Uses number of tiles that are the same.
+		 * Should only be called once by the constructor.
 		 */
 		int heuristic() {
 			int h = 0;
@@ -134,7 +137,7 @@ public class A_Star {
 				else
 					output += " ";
 			}
-			output += "h = " + heuristic() + "\n";
+			output += "h = " + heuristic + "\n";
 			return output;
 		}
 	}
@@ -146,7 +149,7 @@ public class A_Star {
 		// Set goal board
 		State.setEndBoard(new short[] {1, 2, 3, 4, 5, 6, 7, 8, 0});
 		// Create starting State
-		State state = new State(null, new short[] {1, 2, 3, 4, 5, 6, 7, 8, 0}, 0);
+		State state = new State(null, new short[] {1, 2, 3, 4, 0, 5, 6, 7, 8}, 0);
 		// Print starting state
 		System.out.println(state);
 		System.out.println("=====\n");
