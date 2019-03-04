@@ -27,7 +27,7 @@ java A_Star
   - [x] Implement game state data structure
   - [x] Calculate possible moves
     * Always either 2, 3, or 4 possible moves
-  - [x] Calculate the *h* function for each move
+  - [ ] Calculate the *h* function for each move
   - [x] Print board state and *h* values to screen
     * Board state should be 3 x 3, not like text input
   - [ ] Ensure our names/IDs are in the files header
