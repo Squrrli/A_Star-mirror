@@ -7,6 +7,9 @@
  */
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /* A_Star
  * Contains all logic to calculate the shortest solution to an 8-square game with
@@ -147,6 +150,52 @@ public class A_Star {
 	 * Currently outputs the data for an example board.
 	 */
 	public static void main(String[] args) {
+		// take input
+		String inStart = JOptionPane.showInputDialog(null, 
+			"Start State:\n* Numbers 0 through 8\n* In any order\n* Separated by spaces");
+		String inEnd = JOptionPane.showInputDialog(null, 
+			"End State:\n* Numbers 0 through 8\n* In any order\n* Separated by spaces");
+		
+		// pattern for 9 digits, 0-9, space separated
+		String pattern = "^([0-9.]+\\s+){8}[0-9.]$";
+		Pattern r = Pattern.compile(pattern);
+		Matcher mS = r.matcher(inStart);
+		Matcher mE = r.matcher(inEnd);
+		
+		if(! (mS.find() && mE.find()) ) {
+			System.out.println("Invalid input, please try again.");
+			System.exit(0);
+		}
+
+		// convert input into short arrays
+		String[] startStrArr = inStart.split("\\s+");
+		short[] startShortArr = new short[startStrArr.length];
+		String[] endStrArr = inEnd.split("\\s+");
+		short[] endShortArr = new short[endStrArr.length];
+		for(int i = 0; i < startShortArr.length; i++){
+			startShortArr[i] = Short.parseShort(startStrArr[i]);
+		}
+		for(int i = 0; i < endShortArr.length; i++){
+			endShortArr[i] = Short.parseShort(endStrArr[i]);
+		}
+
+		// check for reused numbers 
+		for(int i = 0; i < startShortArr.length; i++){
+			if(startShortArr[i] < 0 || startShortArr[i] > 8 ||
+				endShortArr[i] < 0 || endShortArr[i] > 8){
+				System.out.println("Numbers outside 0-8 found, try again.");
+				System.exit(0);
+			}
+			for(int j=0; j < startShortArr.length && i != j; j++){
+				if(startShortArr[i] == startShortArr[j] &&
+					endShortArr[i] == endShortArr[j]){
+					System.out.println("Reused numbers, try again.");
+					System.exit(0);
+				}
+			}
+		}
+
+
 		// Set goal board
 		State.setEndBoard(new short[] {1, 2, 3, 4, 5, 6, 7, 8, 0});
 		// Create starting State
