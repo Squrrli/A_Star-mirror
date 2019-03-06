@@ -141,7 +141,7 @@ public class A_Star {
 				else
 					output += " ";
 			}
-			output += "h = " + heuristic + "\n";
+			output += "h: " + heuristic + "\n";
 			return output;
 		}
 	}
@@ -236,7 +236,10 @@ public class A_Star {
 		State state = new State(null, start, 0);
 		// Print starting state
 		System.out.println(state);
-		System.out.println("=====\n");
+		for (short i = 0; i < (2 * State.BOARD_WIDTH) -1; i++) { // (BOARD_WIDTH numbers) + (BOARD_WIDTH - 1 spaces)
+			System.out.print('=');
+		}
+		System.out.println('\n');
 
 		// Print all children states
 		for(State i : state.getNextStates()) {
