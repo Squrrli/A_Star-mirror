@@ -135,13 +135,20 @@ public class A_Star {
 		public String toString() {
 			String output = "";
 			for(short i = 0; i < BOARD_SIZE; i++) {
-				output += board[i];
+				if (board[i] == 0)
+					output += ' ';
+				else
+					output += board[i];
+
 				if (i%BOARD_WIDTH == BOARD_WIDTH - 1)
 					output += "\n";
 				else
 					output += " ";
 			}
-			output += "h: " + heuristic + "\n";
+			for (short i = 0; i < (2 * BOARD_WIDTH) - 1; i++) {
+				output += '-';
+			}
+			output += "\nh: " + heuristic + "\n";
 			return output;
 		}
 	}
