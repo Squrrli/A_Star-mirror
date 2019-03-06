@@ -121,7 +121,7 @@ public class A_Star {
 		int heuristic() {
 		   int h = 0, curr=0, dest=0, delta_x=0, delta_y=0;
 		   for (int i = 0; i < BOARD_SIZE; i++) { 
-		      if (board[i] != endBoard[i]) {
+		      if (board[i] != endBoard[i] && board[i] != 0) {
 		         curr=i;
 		         boolean destFound = false;
 		         for(int j = 0; j < BOARD_SIZE && !destFound; j++){
