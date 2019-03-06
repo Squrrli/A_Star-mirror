@@ -115,7 +115,7 @@ public class A_Star {
 
 		/* heuristic
 		 * Calculates the heuristic function for this state.
-		 * Uses number of tiles that are the same.
+		 * Uses sum of distances from tiles to end locations
 		 * Should only be called once by the constructor.
 		 */
 		int heuristic() {
