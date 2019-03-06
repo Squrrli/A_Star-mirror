@@ -119,13 +119,23 @@ public class A_Star {
 		 * Should only be called once by the constructor.
 		 */
 		int heuristic() {
-			int h = 0;
-			for (int i = 0; i < BOARD_SIZE; i++) {
-				if (board[i] != endBoard[i]) {
-					h++;
-				}
-			}
-			return h;
+		   int h = 0, curr=0, dest=0, delta_x=0, delta_y=0;
+		   for (int i = 0; i < BOARD_SIZE; i++) { 
+		      if (board[i] != endBoard[i]) {
+		         curr=i;
+		         boolean destFound = false;
+		         for(int j = 0; j < BOARD_SIZE && !destFound; j++){
+		         	if(board[i]==endBoard[j]){
+		         		dest=j;
+		         		destFound=true;
+		         	}
+		         }
+		         delta_x = Math.abs(dest%BOARD_WIDTH - curr%BOARD_WIDTH);
+		         delta_y = Math.abs(dest/BOARD_WIDTH - curr/BOARD_WIDTH);
+		         h += delta_x + delta_y;
+		      }
+		   }
+		   return h;
 		}
 
 		/* toString
