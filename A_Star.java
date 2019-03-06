@@ -7,6 +7,9 @@
  */
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /* A_Star
  * Contains all logic to calculate the shortest solution to an 8-square game with
@@ -143,14 +146,109 @@ public class A_Star {
 		}
 	}
 
+	/* Validator
+	 * Validate and handle user input.
+	 */
+	private static class Validator {
+		private static String inputPat = "^([0-9.]+\\s+){8}[0-9.]$";
+		private static Pattern r = Pattern.compile(inputPat);
+		private static Matcher stringMatcher;
+
+		// TODO: write test cases
+
+		/* parse
+		 * Parses a string with the inputPat regex to confirm the user has adhered to the format.
+		 */
+		static Boolean parse(String input) {
+			stringMatcher= r.matcher(input);
+			if (!stringMatcher.find()){
+				return false;
+			}
+
+			return true;
+		}
+
+		/* formatInput
+		 * Converts a string to a short[]
+		 */
+		static short[] formatInput(String input){
+			String[] strArr = input.split("\\s+");
+			short[] shortArr = new short[strArr.length];
+			for(int i = 0; i < shortArr.length; i++){
+				shortArr[i] = Short.parseShort( strArr[i] );
+			}
+
+			return shortArr;
+		}
+
+		/* containsDuplicates
+		 * Checks whether a short[] has duplicates in it.
+		 */
+		static Boolean containsDuplicates(short[] arr){
+			for(int i = 0; i < arr.length; i++){
+				for(int j=0; j < arr.length && i != j; j++){
+					if(arr[i] == arr[j]){
+						return false;
+					}
+				}
+			}
+
+			return true;
+		}
+	}
+
 	/* main
-	 * Currently outputs the data for an example board.
+	 * Takes input from the user, validates it, and prints the state and its children to the screen.
 	 */
 	public static void main(String[] args) {
+		// Take and validate input
+		boolean success;
+		String inStart = "", inEnd = "";
+		short start[] = new short[State.BOARD_SIZE], end[] = new short[State.BOARD_SIZE];
+		do {
+			success = true;
+			inStart = JOptionPane.showInputDialog(null, 
+				"Start State:\n* Numbers 0 through 8\n* In any order\n* Separated by spaces");
+			if(inStart == null) {
+				// The user hit "Cancel"
+				System.exit(0);
+			}
+			if(!Validator.parse(inStart)) {
+				JOptionPane.showMessageDialog(null, "Incorrect format. Try again.");
+				success = false;
+				continue;
+			}
+			start = Validator.formatInput(inStart);
+			if(!Validator.containsDuplicates(start)) {
+				JOptionPane.showMessageDialog(null, "Cannot have duplicate numbers. Try again.");
+				success = false;
+				continue;
+			}
+		}while(!success);
+		do {
+			inEnd = JOptionPane.showInputDialog(null, 
+				"End State:\n* Numbers 0 through 8\n* In any order\n* Separated by spaces");
+			if(inEnd == null) {
+				// The user hit "Cancel"
+				System.exit(0);
+			}
+			if(!Validator.parse(inEnd)) {
+				JOptionPane.showMessageDialog(null, "Incorrect format. Try again.");
+				success = false;
+				continue;
+			}
+			end = Validator.formatInput(inEnd);
+			if(!Validator.containsDuplicates(end)) {
+				JOptionPane.showMessageDialog(null, "Cannot have duplicate numbers. Try Again.");
+				success = false;
+				continue;
+			}
+		}while(!success);
+
 		// Set goal board
-		State.setEndBoard(new short[] {1, 2, 3, 4, 5, 6, 7, 8, 0});
+		State.setEndBoard(end);
 		// Create starting State
-		State state = new State(null, new short[] {1, 2, 3, 4, 0, 5, 6, 7, 8}, 0);
+		State state = new State(null, start, 0);
 		// Print starting state
 		System.out.println(state);
 		System.out.println("=====\n");
