@@ -145,13 +145,20 @@ public class A_Star {
 		public String toString() {
 			String output = "";
 			for(short i = 0; i < BOARD_SIZE; i++) {
-				output += board[i];
+				if (board[i] == 0)
+					output += ' ';
+				else
+					output += board[i];
+
 				if (i%BOARD_WIDTH == BOARD_WIDTH - 1)
 					output += "\n";
 				else
 					output += " ";
 			}
-			output += "h = " + heuristic + "\n";
+			for (short i = 0; i < (2 * BOARD_WIDTH) - 1; i++) {
+				output += '-';
+			}
+			output += "\nh: " + heuristic + "\n";
 			return output;
 		}
 	}
@@ -169,7 +176,7 @@ public class A_Star {
 		/* parse
 		 * Parses a string with the inputPat regex to confirm the user has adhered to the format.
 		 */
-		static Boolean parse(String input) {
+		private static Boolean parse(String input) {
 			stringMatcher= r.matcher(input);
 			if (!stringMatcher.find()){
 				return false;
@@ -181,7 +188,7 @@ public class A_Star {
 		/* formatInput
 		 * Converts a string to a short[]
 		 */
-		static short[] formatInput(String input){
+		private static short[] formatInput(String input){
 			String[] strArr = input.split("\\s+");
 			short[] shortArr = new short[strArr.length];
 			for(int i = 0; i < shortArr.length; i++){
@@ -194,16 +201,46 @@ public class A_Star {
 		/* containsDuplicates
 		 * Checks whether a short[] has duplicates in it.
 		 */
-		static Boolean containsDuplicates(short[] arr){
+		private static Boolean containsDuplicates(short[] arr){
+			boolean[] seen = new boolean[State.BOARD_SIZE];
 			for(int i = 0; i < arr.length; i++){
-				for(int j=0; j < arr.length && i != j; j++){
-					if(arr[i] == arr[j]){
-						return false;
-					}
+				short val = arr[i];
+				if(val >= State.BOARD_SIZE || val < 0) {
+					return true;
 				}
+				if(seen[val]) {
+					return true;
+				}
+
+				seen[val] = true;
 			}
 
-			return true;
+			return false;
+		}
+
+		/* getBoard
+		 * Takes the name of the board to show to the user ("Start"/"End") and returns a fully validated board.
+		 */
+		public static short[] getBoard(String name) {
+			while(true) {
+				String input = JOptionPane.showInputDialog(null,
+					name + " State:\n* Numbers 0 through 8\n* In any order\n* Separated by spaces");
+				if(input == null) {
+					// The user hit "Cancel"
+					System.exit(0);
+				}
+				if(!parse(input)) {
+					JOptionPane.showMessageDialog(null, "Incorrect format. Try again.");
+					continue;
+				}
+				short[] output = formatInput(input);
+				if(containsDuplicates(output)) {
+					JOptionPane.showMessageDialog(null, "Must contain all numbers [0, 8] and cannot have duplicates. Try again.");
+					continue;
+				}
+
+				return output;
+			}
 		}
 	}
 
@@ -211,49 +248,9 @@ public class A_Star {
 	 * Takes input from the user, validates it, and prints the state and its children to the screen.
 	 */
 	public static void main(String[] args) {
-		// Take and validate input
-		boolean success;
-		String inStart = "", inEnd = "";
-		short start[] = new short[State.BOARD_SIZE], end[] = new short[State.BOARD_SIZE];
-		do {
-			success = true;
-			inStart = JOptionPane.showInputDialog(null, 
-				"Start State:\n* Numbers 0 through 8\n* In any order\n* Separated by spaces");
-			if(inStart == null) {
-				// The user hit "Cancel"
-				System.exit(0);
-			}
-			if(!Validator.parse(inStart)) {
-				JOptionPane.showMessageDialog(null, "Incorrect format. Try again.");
-				success = false;
-				continue;
-			}
-			start = Validator.formatInput(inStart);
-			if(!Validator.containsDuplicates(start)) {
-				JOptionPane.showMessageDialog(null, "Cannot have duplicate numbers. Try again.");
-				success = false;
-				continue;
-			}
-		}while(!success);
-		do {
-			inEnd = JOptionPane.showInputDialog(null, 
-				"End State:\n* Numbers 0 through 8\n* In any order\n* Separated by spaces");
-			if(inEnd == null) {
-				// The user hit "Cancel"
-				System.exit(0);
-			}
-			if(!Validator.parse(inEnd)) {
-				JOptionPane.showMessageDialog(null, "Incorrect format. Try again.");
-				success = false;
-				continue;
-			}
-			end = Validator.formatInput(inEnd);
-			if(!Validator.containsDuplicates(end)) {
-				JOptionPane.showMessageDialog(null, "Cannot have duplicate numbers. Try Again.");
-				success = false;
-				continue;
-			}
-		}while(!success);
+		// Get boards
+		short start[] = Validator.getBoard("Start");
+		short end[] = Validator.getBoard("End");
 
 		// Set goal board
 		State.setEndBoard(end);
@@ -261,7 +258,10 @@ public class A_Star {
 		State state = new State(null, start, 0);
 		// Print starting state
 		System.out.println(state);
-		System.out.println("=====\n");
+		for (short i = 0; i < (2 * State.BOARD_WIDTH) -1; i++) { // (BOARD_WIDTH numbers) + (BOARD_WIDTH - 1 spaces)
+			System.out.print('=');
+		}
+		System.out.println('\n');
 
 		// Print all children states
 		for(State i : state.getNextStates()) {
