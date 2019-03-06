@@ -146,6 +146,51 @@ public class A_Star {
 		}
 	}
 
+	/*	Validator
+	 *	Validate and handle user input
+	 */
+	private static class Validator {
+		private static String inputPat = "^([0-9.]+\\s+){8}[0-9.]$";
+		private static Pattern r = Pattern.compile(inputPat);
+		private static Matcher stringMatcher;
+
+		// TODO: finish refactoring, write test cases
+
+		static Boolean parse(String input) {
+			stringMatcher= r.matcher(input);
+
+			if ( !stringMatcher.find() ){
+				System.out.println("Validator.parse(): Patter doesn't match input");
+				return false;
+			}
+			System.out.println("Validator.parse(): Patter doesn't match input");
+			return true;
+		}
+
+		static short[] formatInput(String input){
+			String[] strArr = input.split("\\s+");
+			short[] shortArr = new short[strArr.length];
+			for(int i = 0; i < shortArr.length; i++){
+				shortArr[i] = Short.parseShort( strArr[i] );
+			}
+			return shortArr;
+		}
+
+		static Boolean containsDuplictaes(short[] arr){
+			for(int i = 0; i < arr.length; i++){
+				for(int j=0; j < arr.length && i != j; j++){
+					if(arr[i] == arr[j]){
+						System.out.println("Reused numbers, try again.");
+						return false;
+					}
+				}
+			}
+
+			return true;
+		}
+
+	}
+
 	/* main
 	 * Currently outputs the data for an example board.
 	 */
@@ -155,58 +200,24 @@ public class A_Star {
 			"Start State:\n* Numbers 0 through 8\n* In any order\n* Separated by spaces");
 		String inEnd = JOptionPane.showInputDialog(null, 
 			"End State:\n* Numbers 0 through 8\n* In any order\n* Separated by spaces");
-		
-		// pattern for 9 digits, 0-9, space separated
-		String pattern = "^([0-9.]+\\s+){8}[0-9.]$";
-		Pattern r = Pattern.compile(pattern);
-		Matcher mS = r.matcher(inStart);
-		Matcher mE = r.matcher(inEnd);
-		
-		if(! (mS.find() && mE.find()) ) {
-			System.out.println("Invalid input, please try again.");
-			System.exit(0);
-		}
-
-		// convert input into short arrays
-		String[] startStrArr = inStart.split("\\s+");
-		short[] startShortArr = new short[startStrArr.length];
-		String[] endStrArr = inEnd.split("\\s+");
-		short[] endShortArr = new short[endStrArr.length];
-		for(int i = 0; i < startShortArr.length; i++){
-			startShortArr[i] = Short.parseShort(startStrArr[i]);
-		}
-		for(int i = 0; i < endShortArr.length; i++){
-			endShortArr[i] = Short.parseShort(endStrArr[i]);
-		}
-
-		// check for reused numbers 
-		for(int i = 0; i < startShortArr.length; i++){
-			if(startShortArr[i] < 0 || startShortArr[i] > 8 ||
-				endShortArr[i] < 0 || endShortArr[i] > 8){
-				System.out.println("Numbers outside 0-8 found, try again.");
-				System.exit(0);
-			}
-			for(int j=0; j < startShortArr.length && i != j; j++){
-				if(startShortArr[i] == startShortArr[j] &&
-					endShortArr[i] == endShortArr[j]){
-					System.out.println("Reused numbers, try again.");
-					System.exit(0);
-				}
-			}
-		}
 
 
 		// Set goal board
-		State.setEndBoard(new short[] {1, 2, 3, 4, 5, 6, 7, 8, 0});
-		// Create starting State
-		State state = new State(null, new short[] {1, 2, 3, 4, 0, 5, 6, 7, 8}, 0);
-		// Print starting state
-		System.out.println(state);
-		System.out.println("=====\n");
+		// State.setEndBoard(new short[] {1, 2, 3, 4, 5, 6, 7, 8, 0});
+		// // Create starting State
+		// State state = new State(null, new short[] {1, 2, 3, 4, 0, 5, 6, 7, 8}, 0);
+		// // Print starting state
+		// System.out.println(state);
+		// System.out.println("=====\n");
 
-		// Print all children states
-		for(State i : state.getNextStates()) {
-			System.out.println(i);
-		}
+		// // Print all children states
+		// for(State i : state.getNextStates()) {
+		// 	System.out.println(i);
+		// }
+
+		// System.out.println("-------- Testing Validator Class --------");
+		// Validator.parse("0 1 2 3 4 5 6 7 8 9");
+		// System.out.println( Validator.containsDuplictaes( Validator.formatInput("0 1 1 3 4 5 6 7 8 9")) );
+		
 	}
 }
