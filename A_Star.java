@@ -159,7 +159,7 @@ public class A_Star {
 		/* parse
 		 * Parses a string with the inputPat regex to confirm the user has adhered to the format.
 		 */
-		static Boolean parse(String input) {
+		private static Boolean parse(String input) {
 			stringMatcher= r.matcher(input);
 			if (!stringMatcher.find()){
 				return false;
@@ -171,7 +171,7 @@ public class A_Star {
 		/* formatInput
 		 * Converts a string to a short[]
 		 */
-		static short[] formatInput(String input){
+		private static short[] formatInput(String input){
 			String[] strArr = input.split("\\s+");
 			short[] shortArr = new short[strArr.length];
 			for(int i = 0; i < shortArr.length; i++){
@@ -184,7 +184,7 @@ public class A_Star {
 		/* containsDuplicates
 		 * Checks whether a short[] has duplicates in it.
 		 */
-		static Boolean containsDuplicates(short[] arr){
+		private static Boolean containsDuplicates(short[] arr){
 			for(int i = 0; i < arr.length; i++){
 				for(int j=0; j < arr.length && i != j; j++){
 					if(arr[i] == arr[j]){
@@ -195,55 +195,40 @@ public class A_Star {
 
 			return true;
 		}
+
+		/* getBoard
+		 * Takes the name of the board to show to the user ("Start"/"End") and returns a fully validated board.
+		 */
+		public static short[] getBoard(String name) {
+			while(true) {
+				String input = JOptionPane.showInputDialog(null,
+					name + " State:\n* Numbers 0 through 8\n* In any order\n* Separated by spaces");
+				if(input == null) {
+					// The user hit "Cancel"
+					System.exit(0);
+				}
+				if(!parse(input)) {
+					JOptionPane.showMessageDialog(null, "Incorrect format. Try again.");
+					continue;
+				}
+				short[] output = formatInput(input);
+				if(!containsDuplicates(output)) {
+					JOptionPane.showMessageDialog(null, "Cannot have duplicate numbers. Try again.");
+					continue;
+				}
+
+				return output;
+			}
+		}
 	}
 
 	/* main
 	 * Takes input from the user, validates it, and prints the state and its children to the screen.
 	 */
 	public static void main(String[] args) {
-		// Take and validate input
-		boolean success;
-		String inStart = "", inEnd = "";
-		short start[] = new short[State.BOARD_SIZE], end[] = new short[State.BOARD_SIZE];
-		do {
-			success = true;
-			inStart = JOptionPane.showInputDialog(null, 
-				"Start State:\n* Numbers 0 through 8\n* In any order\n* Separated by spaces");
-			if(inStart == null) {
-				// The user hit "Cancel"
-				System.exit(0);
-			}
-			if(!Validator.parse(inStart)) {
-				JOptionPane.showMessageDialog(null, "Incorrect format. Try again.");
-				success = false;
-				continue;
-			}
-			start = Validator.formatInput(inStart);
-			if(!Validator.containsDuplicates(start)) {
-				JOptionPane.showMessageDialog(null, "Cannot have duplicate numbers. Try again.");
-				success = false;
-				continue;
-			}
-		}while(!success);
-		do {
-			inEnd = JOptionPane.showInputDialog(null, 
-				"End State:\n* Numbers 0 through 8\n* In any order\n* Separated by spaces");
-			if(inEnd == null) {
-				// The user hit "Cancel"
-				System.exit(0);
-			}
-			if(!Validator.parse(inEnd)) {
-				JOptionPane.showMessageDialog(null, "Incorrect format. Try again.");
-				success = false;
-				continue;
-			}
-			end = Validator.formatInput(inEnd);
-			if(!Validator.containsDuplicates(end)) {
-				JOptionPane.showMessageDialog(null, "Cannot have duplicate numbers. Try Again.");
-				success = false;
-				continue;
-			}
-		}while(!success);
+		// Get boards
+		short start[] = Validator.getBoard("Start");
+		short end[] = Validator.getBoard("End");
 
 		// Set goal board
 		State.setEndBoard(end);

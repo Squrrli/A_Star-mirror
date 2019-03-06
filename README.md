@@ -20,17 +20,17 @@ java A_Star
 
 ## Status
 - [ ] Complete first sprint *(Due: 17:00 29 March 2019)*
-  - [ ] Parse input
-    - [ ] Get first state from a JOptionPane
-    - [ ] Validate all numbers in [0, 8] are represented without duplicates and are space separated
-    - [ ] Get the final state from a JOptionPane and validate as well
+  - [x] Parse input
+    - [x] Get first state from a JOptionPane
+    - [x] Validate all numbers in [0, 8] are represented without duplicates and are space separated
+    - [x] Get the final state from a JOptionPane and validate as well
   - [x] Implement game state data structure
   - [x] Calculate possible moves
     * Always either 2, 3, or 4 possible moves
   - [ ] Calculate the *h* function for each move
   - [x] Print board state and *h* values to screen
     * Board state should be 3 x 3, not like text input
-  - [ ] Ensure our names/IDs are in the files header
+  - [x] Ensure our names/IDs are in the files header
   - [ ] Actually submit
     - [ ] Ensure code compiles
     - [ ] Rename file
