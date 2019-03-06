@@ -192,15 +192,20 @@ public class A_Star {
 		 * Checks whether a short[] has duplicates in it.
 		 */
 		private static Boolean containsDuplicates(short[] arr){
+			boolean[] seen = new boolean[State.BOARD_SIZE];
 			for(int i = 0; i < arr.length; i++){
-				for(int j=0; j < arr.length && i != j; j++){
-					if(arr[i] == arr[j]){
-						return false;
-					}
+				short val = arr[i];
+				if(val >= State.BOARD_SIZE || val < 0) {
+					return true;
 				}
+				if(seen[val]) {
+					return true;
+				}
+
+				seen[val] = true;
 			}
 
-			return true;
+			return false;
 		}
 
 		/* getBoard
@@ -219,8 +224,8 @@ public class A_Star {
 					continue;
 				}
 				short[] output = formatInput(input);
-				if(!containsDuplicates(output)) {
-					JOptionPane.showMessageDialog(null, "Cannot have duplicate numbers. Try again.");
+				if(containsDuplicates(output)) {
+					JOptionPane.showMessageDialog(null, "Must contain all numbers [0, 8] and cannot have duplicates. Try again.");
 					continue;
 				}
 
