@@ -119,8 +119,8 @@ public class A_Star {
 		 * Should only be called once by the constructor.
 		 */
       int heuristic() {
-         /* Board where the location of each index's num is stored at that index
-          * e.g. Location of 3 in endBoard is stored at element 3 of refBoard
+         /* Board where the location of each index's no. is stored at that index
+          * e.g. Location of no. 3 in endBoard is stored at element 3 of refBoard
           */
          short [] refBoard = new short[BOARD_SIZE];
          for(short i = 0; i < BOARD_SIZE; i++)
