@@ -150,7 +150,7 @@ public class A_Star {
 	 * Validate and handle user input.
 	 */
 	protected static class Validator {
-		private static String inputPat = "^([0-9.]+\\s+){8}[0-8.]$";
+		private static String inputPat = "^([0-9.]\\s+){8}[0-8.]$";
 		private static Pattern r = Pattern.compile(inputPat);
 		private static Matcher stringMatcher;
 
