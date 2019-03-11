@@ -118,25 +118,26 @@ public class A_Star {
 		 * Uses sum of distances from tiles to end locations
 		 * Should only be called once by the constructor.
 		 */
-		int heuristic() {
-		   int h = 0, curr=0, dest=0, delta_x=0, delta_y=0;
-		   for (int i = 0; i < BOARD_SIZE; i++) { 
-		      if (board[i] != endBoard[i] && board[i] != 0) {
-		         curr=i;
-		         boolean destFound = false;
-		         for(int j = 0; j < BOARD_SIZE && !destFound; j++){
-		         	if(board[i]==endBoard[j]){
-		         		dest=j;
-		         		destFound=true;
-		         	}
-		         }
-		         delta_x = Math.abs(dest%BOARD_WIDTH - curr%BOARD_WIDTH);
-		         delta_y = Math.abs(dest/BOARD_WIDTH - curr/BOARD_WIDTH);
-		         h += delta_x + delta_y;
-		      }
-		   }
-		   return h;
-		}
+      int heuristic() {
+         /* Board where the location of each index's num is stored at that index
+          * e.g. Location of 3 in endBoard is stored at element 3 of refBoard
+          */
+         short [] refBoard = new short[BOARD_SIZE];
+         for(short i = 0; i < BOARD_SIZE; i++)
+            refBoard[endBoard[i]] = i;
+
+         int h = 0, curr=0, dest=0, delta_x=0, delta_y=0;
+         for (int i = 0; i < BOARD_SIZE; i++) { 
+            if (board[i] != endBoard[i] && board[i] != 0) {
+               curr = i;
+               dest = refBoard[board[i]];
+               delta_x = Math.abs(dest%BOARD_WIDTH - curr%BOARD_WIDTH);
+               delta_y = Math.abs(dest/BOARD_WIDTH - curr/BOARD_WIDTH);
+               h += delta_x + delta_y;
+            }
+         }
+         return h;
+      }
 
 		/* toString
 		 * Outputs the State as a String.
