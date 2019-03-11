@@ -149,8 +149,8 @@ public class A_Star {
 	/* Validator
 	 * Validate and handle user input.
 	 */
-	private static class Validator {
-		private static String inputPat = "^([0-9.]+\\s+){8}[0-9.]$";
+	protected static class Validator {
+		private static String inputPat = "^([0-9.]+\\s+){8}[0-8.]$";
 		private static Pattern r = Pattern.compile(inputPat);
 		private static Matcher stringMatcher;
 
