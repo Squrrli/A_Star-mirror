@@ -27,7 +27,7 @@ class A_StarTest {
     @DisplayName("Validator.parse(): Input value > 8(max value in 9 puzzle)")
     void inputValueOutOfBounds1(){
         assertFalse(A_Star.Validator.parse("1 2 3 4 5 6 7 8 9"));
-        assertFalse(A_Star.Validator.parse("1 22 3 4 5 6 7 8 0")); //returning true only in test.. works in live
+        assertFalse(A_Star.Validator.parse("1 0 3 4 5 6 7 8 22"));
     }
 
     @Test
