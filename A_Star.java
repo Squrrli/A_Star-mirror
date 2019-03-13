@@ -136,7 +136,7 @@ public class A_Star {
                h += delta_x + delta_y;
             }
          }
-         return h;
+         return h; // + depth for f (but he wants h for now)
       }
 
 		/* toString
