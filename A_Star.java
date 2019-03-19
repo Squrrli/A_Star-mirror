@@ -95,7 +95,7 @@ public class A_Star {
 				newBoard[index + 1] = 0;
 				possibleStates.add(new State(this, newBoard, depth + 1));
 			}
-
+			
 			return possibleStates;
 		}
 
@@ -118,26 +118,26 @@ public class A_Star {
 		 * Uses sum of distances from tiles to end locations
 		 * Should only be called once by the constructor.
 		 */
-      int heuristic() {
-         /* Board where the location of each index's no. is stored at that index
-          * e.g. Location of no. 3 in endBoard is stored at element 3 of refBoard
-          */
-         short [] refBoard = new short[BOARD_SIZE];
-         for(short i = 0; i < BOARD_SIZE; i++)
-            refBoard[endBoard[i]] = i;
+		int heuristic() {
+			/* Board where the location of each index's no. is stored at that index
+			 * e.g. Location of no. 3 in endBoard is stored at element 3 of refBoard
+			 */
+			short [] refBoard = new short[BOARD_SIZE];
+			for(short i = 0; i < BOARD_SIZE; i++)
+				refBoard[endBoard[i]] = i;
 
-         int h = 0, curr=0, dest=0, delta_x=0, delta_y=0;
-         for (int i = 0; i < BOARD_SIZE; i++) { 
-            if (board[i] != endBoard[i] && board[i] != 0) {
-               curr = i;
-               dest = refBoard[board[i]];
-               delta_x = Math.abs(dest%BOARD_WIDTH - curr%BOARD_WIDTH);
-               delta_y = Math.abs(dest/BOARD_WIDTH - curr/BOARD_WIDTH);
-               h += delta_x + delta_y;
-            }
-         }
-         return h; // + depth for f (but he wants h for now)
-      }
+			int h = 0, curr=0, dest=0, delta_x=0, delta_y=0;
+			for (int i = 0; i < BOARD_SIZE; i++) { 
+				if (board[i] != endBoard[i] && board[i] != 0) {
+					curr = i;
+					dest = refBoard[board[i]];
+					delta_x = Math.abs(dest%BOARD_WIDTH - curr%BOARD_WIDTH);
+					delta_y = Math.abs(dest/BOARD_WIDTH - curr/BOARD_WIDTH);
+					h += delta_x + delta_y;
+				}
+			}
+			return h; // + depth for f (but he wants h for now)
+		}
 
 		/* toString
 		 * Outputs the State as a String.
