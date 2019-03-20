@@ -19,7 +19,7 @@ java A_Star
 ```
 
 ## Status
-- [ ] Complete first sprint *(Due: 17:00 29 March 2019)*
+- [x] Complete first sprint *(Due: 17:00 29 March 2019)*
   - [x] Parse input
     - [x] Get first state from a JOptionPane
     - [x] Validate all numbers in [0, 8] are represented without duplicates and are space separated
@@ -27,20 +27,20 @@ java A_Star
   - [x] Implement game state data structure
   - [x] Calculate possible moves
     * Always either 2, 3, or 4 possible moves
-  - [ ] Calculate the *h* function for each move
+  - [x] Calculate the *h* function for each move
   - [x] Print board state and *h* values to screen
     * Board state should be 3 x 3, not like text input
   - [x] Ensure our names/IDs are in the files header
-  - [ ] Actually submit
-    - [ ] Ensure code compiles
-    - [ ] Rename file
-    - [ ] Email code
+  - [x] Actually submit
+    - [x] Ensure code compiles
+    - [x] Rename file
+    - [x] Email code
 - [ ] Complete second sprint *(Due: 17:00 19 April 2019)*
   - [ ] Implement A*
     - [x] Use move calculation to generate new states
     - [ ] Maintain open and closed sets
     - [ ] Sort open set by *f = g + h*
-    - [ ] Each state keeps track of previous state so full path can be generated
+    - [x] Each state keeps track of previous state so full path can be generated
     - [ ] Display shortest path
   - [ ] *Optional:* Implement 15-square game
     - [ ] Modify data structures to handle 16 slots, from 9
