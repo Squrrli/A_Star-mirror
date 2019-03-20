@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class A_StarTest {
 
+
+    /* Validator.parse()
+     *  Check possible user input states
+     */
     @Test
     @DisplayName("Validator.parse(): Correct input format")
     void correctInputFormat(){
@@ -31,8 +35,24 @@ class A_StarTest {
     }
 
     @Test
-    @DisplayName("Validator.parse(): Input vlaue < 0(minimum value)")
+    @DisplayName("Validator.parse(): Input value < 0(minimum value)")
     void inputValueOutOfBounds2(){
         assertFalse(A_Star.Validator.parse("1 -2 3 4 5 6 7 8 0"));
+    }
+
+    /* Validator.containsDuplicates()
+     * Check the input short[] contains no duplicate values
+     */
+    @Test
+    @DisplayName("Validator.containsDuplicates(): valid array state")
+    void validInputArray(){
+        assertTrue(A_Star.Validator.containsDuplicates(new short[]{1, 2, 3, 4, 5, 6, 7, 8, 0}));
+    }
+
+    @Test
+    @DisplayName("Validator.containsDuplicates(): valid array state")
+    void inputContains2OrMoreDups(){
+        assertFalse(A_Star.Validator.containsDuplicates(new short[]{1, 1, 3, 4, 5, 6, 7, 8, 0}));
+        assertFalse(A_Star.Validator.containsDuplicates(new short[]{1, 1, 1, 1, 1, 1, 1, 1, 1}));
     }
 }
