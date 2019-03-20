@@ -126,11 +126,10 @@ public class A_Star {
 			for(short i = 0; i < BOARD_SIZE; i++)
 				refBoard[endBoard[i]] = i;
 
-			int h = 0, curr=0, dest=0, delta_x=0, delta_y=0;
-			for (int i = 0; i < BOARD_SIZE; i++) { 
-				if (board[i] != endBoard[i] && board[i] != 0) {
-					curr = i;
-					dest = refBoard[board[i]];
+			int h = 0, dest=0, delta_x=0, delta_y=0;
+			for (int curr = 0; curr < BOARD_SIZE; curr++) { 
+				if (board[curr] != endBoard[curr] && board[curr] != 0) {
+					dest = refBoard[board[curr]];
 					delta_x = Math.abs(dest%BOARD_WIDTH - curr%BOARD_WIDTH);
 					delta_y = Math.abs(dest/BOARD_WIDTH - curr/BOARD_WIDTH);
 					h += delta_x + delta_y;
