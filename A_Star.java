@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Deque;
+import java.util.ArrayDeque;
 
 /* A_Star
  * Contains all logic to calculate the shortest solution to an 8-square game with
@@ -20,7 +24,7 @@ public class A_Star {
 	 * Holds a single state of the game, calculating future moves and keeping
 	 * track of the previous state.
 	 */
-	public static class State {
+	public static class State implements Comparable<State> {
 		// Board size constants
 		public static final short BOARD_WIDTH = 3;
 		public static final short BOARD_HEIGHT = 3;
@@ -106,6 +110,20 @@ public class A_Star {
 			return depth + heuristic;
 		}
 
+		/* getHeuristic
+		 * Returns the heuristic value.
+		 */
+		public int getHeuristic() {
+			return heuristic;
+		}
+
+		/* getPrevious
+		 * Returns the previous State. Returns null, if root.
+		 */
+		public State getPrevious() {
+			return prev;
+		}
+
 		/* setEndBoard
 		 * Sets the goal board. Used to calculate heuristic.
 		 */
@@ -160,6 +178,14 @@ public class A_Star {
 			}
 			output += "\nh: " + heuristic + "\n";
 			return output;
+		}
+
+		/* compareTo
+		 * Necessary to implement Comparable, which is in turn necessary to be used in a PriorityQueue.
+		 */
+		@Override
+		public int compareTo(State other) {
+			return getEstimatedCost() - other.getEstimatedCost();
 		}
 	}
 
@@ -249,23 +275,23 @@ public class A_Star {
 	 */
 	public static void main(String[] args) {
 		// Get boards
-		short start[] = Validator.getBoard("Start");
-		short end[] = Validator.getBoard("End");
+		short board_start[] = Validator.getBoard("Start");
+		short board_end[] = Validator.getBoard("End");
 
 		// Set goal board
-		State.setEndBoard(end);
-		// Create starting State
-		State state = new State(null, start, 0);
-		// Print starting state
-		System.out.println(state);
-		for (short i = 0; i < (2 * State.BOARD_WIDTH) -1; i++) { // (BOARD_WIDTH numbers) + (BOARD_WIDTH - 1 spaces)
-			System.out.print('=');
-		}
-		System.out.println('\n');
+		State.setEndBoard(board_end);
 
-		// Print all children states
-		for(State i : state.getNextStates()) {
-			System.out.println(i);
-		}
+		// Create starting State
+		State state_start = new State(null, board_start, 0);
+
+		// Set up our sets
+		HashSet<State> seen = new HashSet<State>();
+		PriorityQueue<State> open = new PriorityQueue<State>();
+
+		// Set up our starting state
+		seen.add(state_start);
+		open.add(state_start);
+
+		// Run A*
 	}
 }

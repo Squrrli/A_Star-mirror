@@ -39,7 +39,7 @@ java A_Star
   - [ ] Implement A*
     - [x] Use move calculation to generate new states
     - [ ] Maintain open and closed sets
-    - [ ] Sort open set by *f = g + h*
+    - [x] Sort open set by *f = g + h*
     - [x] Each state keeps track of previous state so full path can be generated
     - [ ] Display shortest path
   - [ ] *Optional:* Implement 15-square game
