@@ -187,6 +187,31 @@ public class A_Star {
 		public int compareTo(State other) {
 			return getEstimatedCost() - other.getEstimatedCost();
 		}
+
+		/* 	equals
+		 *	Necessary to implement hashSet, used for seen (closed) set
+		 */
+		@Override
+		public boolean equals(Object o) {
+
+			if(this.hashCode() == o.hashCode())
+				return true;
+			return false;
+		}
+
+		/*	hashCode
+		 *	Must be implemented whenever equals() is overridden
+		 */
+		@Override
+		public int hashCode() {
+			int result = 0;
+
+			for(int i = 0; i < this.board.length; i++) {
+				result *= 10;
+				result += this.board[i];
+			}
+			return result;
+		}
 	}
 
 	/* Validator
@@ -197,12 +222,10 @@ public class A_Star {
 		private static Pattern r = Pattern.compile(inputPat);
 		private static Matcher stringMatcher;
 
-		// TODO: write test cases
-
 		/* parse
 		 * Parses a string with the inputPat regex to confirm the user has adhered to the format.
 		 */
-		private static Boolean parse(String input) {
+		protected static Boolean parse(String input) {
 			stringMatcher= r.matcher(input);
 			if (!stringMatcher.find()){
 				return false;
@@ -227,7 +250,7 @@ public class A_Star {
 		/* containsDuplicates
 		 * Checks whether a short[] has duplicates in it.
 		 */
-		private static Boolean containsDuplicates(short[] arr){
+		protected static Boolean containsDuplicates(short[] arr){
 			boolean[] seen = new boolean[State.BOARD_SIZE];
 			for(int i = 0; i < arr.length; i++){
 				short val = arr[i];
@@ -291,6 +314,7 @@ public class A_Star {
 		// Set up our starting state
 		seen.add(state_start);
 		open.add(state_start);
+
 
 		// Run A*
 	}
