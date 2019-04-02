@@ -36,15 +36,15 @@ java A_Star
     - [x] Rename file
     - [x] Email code
 - [ ] Complete second sprint *(Due: 17:00 19 April 2019)*
-  - [ ] Implement A*
+  - [x] Implement A*
     - [x] Use move calculation to generate new states
-    - [ ] Maintain open and closed sets
+    - [x] Maintain open and closed sets
     - [x] Sort open set by *f = g + h*
     - [x] Each state keeps track of previous state so full path can be generated
-    - [ ] Display shortest path
-  - [ ] *Optional:* Implement 15-square game
-    - [ ] Modify data structures to handle 16 slots, from 9
-    - [ ] Ensure computational and memory efficiency, as the problem size has increased 57657600 fold
+    - [x] Display shortest path
+  - [x] *Optional:* Implement 15-square game
+    - [x] Modify data structures to handle 16 slots, from 9
+    - [x] Ensure computational and memory efficiency, as the problem size has increased 57657600 fold
   - [ ] Actually submit
     - [ ] Ensure code compiles
     - [ ] Rename file

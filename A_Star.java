@@ -180,6 +180,9 @@ public class A_Star {
 			return output;
 		}
 
+		/* winPath
+		 * Recursively prints the path from the root node to this State.
+		 */
 		public String winPath(){
 				 if(this.prev != null)
 						return (this.prev).winPath() + this.toString();
@@ -335,8 +338,7 @@ public class A_Star {
 
 		// If board width is odd, no. of inversions must be even
 		if(State.BOARD_WIDTH % 2 != 0 && inv % 2 != 0){
-			System.out.println("Puzzle is unsolvable, sorry!");
-			System.exit(0);
+		    unsolvable();
 		}
 
 		if(State.BOARD_WIDTH % 2 == 0){
@@ -347,6 +349,11 @@ public class A_Star {
 					then the number of inversions in a solvable situation is even.
 			 *
 			 */
+		    int zero_index = getArrayIndex(board_start, (short)0);
+		    int row = zero_index / State.BOARD_WIDTH;
+		    if((row % 2 == 0) != (inv % 2 == 0)) { // Its row and column parity must be opposites, per above description
+			unsolvable();
+		    }
 		}
 
 		// Set goal board
@@ -383,6 +390,9 @@ public class A_Star {
 		System.out.println(temp.winPath());
 	}
 
+	/* getInversions
+	 * Returns the number of inversions between the start and end boards.
+	 */
 	public static int getInversions(short[] startBoard, short[] endBoard, short w){
 		int invCount = 0;
 		for(short i = 0; i < w * w; i++){
@@ -396,8 +406,11 @@ public class A_Star {
 		return invCount;
 	}
 
+	/* getArrayIndex
+	 * Given an array and a value, returns the index of that value in the array. returns -1 if it cannot be found.
+	 */
 	public static int getArrayIndex(short[] arr, short val){
-		int k=0;
+		int k=-1;
 		for(int i=0;i<arr.length;i++){
 			if(arr[i]==val){
 				 k=i;
@@ -405,5 +418,13 @@ public class A_Star {
 			}
 		}
 		return k;
+	}
+
+	/* unsolvable
+	 * Tells the user the board arrangement is unsolvable and exits the program.
+	 */
+	public static void unsolvable() {
+	    System.out.println("This puzzle is unsolvable.");
+	    System.exit(0);
 	}
 }
