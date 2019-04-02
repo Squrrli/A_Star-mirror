@@ -20,16 +20,15 @@ import java.util.ArrayDeque;
  * A*.
  */
 public class A_Star {
-
 	/* State
 	 * Holds a single state of the game, calculating future moves and keeping
 	 * track of the previous state.
 	 */
 	public static class State implements Comparable<State> {
-		// Board size constants
-		public static short BOARD_WIDTH = 3;
-		public static short BOARD_HEIGHT = 3;
-		public static short BOARD_SIZE = (short) (BOARD_WIDTH * BOARD_HEIGHT);
+		// Board size constants (set in main)
+		public static short BOARD_WIDTH = 0;
+		public static short BOARD_HEIGHT = 0;
+		public static short BOARD_SIZE = 0;
 
 		// The goal state
 		static short[] endBoard;
@@ -306,6 +305,16 @@ public class A_Star {
 	 * Takes input from the user, validates it, and prints the state and its children to the screen.
 	 */
 	public static void main(String[] args) {
+		// Determine 8 or 15 Puzzle
+		String options[] = {"8 Puzzle", "15 Puzzle"};
+		String response = (String)JOptionPane.showInputDialog(null, "Choose whether you would like to play the 8 Puzzle or the 15 puzzle", null, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+		if (response == options[0]) {
+		    State.BOARD_WIDTH = State.BOARD_HEIGHT = 3;
+		} else {
+		    State.BOARD_WIDTH = State.BOARD_HEIGHT = 4;
+		}
+		State.BOARD_SIZE = (short)(State.BOARD_WIDTH * State.BOARD_HEIGHT);
+
 		// Get boards
 		short board_start[] = Validator.getBoard("Start");
 		short board_end[] = Validator.getBoard("End");
