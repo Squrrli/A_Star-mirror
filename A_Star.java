@@ -20,14 +20,19 @@ import java.util.ArrayDeque;
  * A*.
  */
 public class A_Star {
+//	public static final short BOARD_WIDTH = 4;
+//	public static final short BOARD_HEIGHT = 4;
+//	public static final short BOARD_SIZE = BOARD_WIDTH * BOARD_HEIGHT;
+
+
 	/* State
 	 * Holds a single state of the game, calculating future moves and keeping
 	 * track of the previous state.
 	 */
 	public static class State implements Comparable<State> {
 		// Board size constants
-		public static final short BOARD_WIDTH = 3;
-		public static final short BOARD_HEIGHT = 3;
+		public static final short BOARD_WIDTH = 4;
+		public static final short BOARD_HEIGHT = 4;
 		public static final short BOARD_SIZE = BOARD_WIDTH * BOARD_HEIGHT;
 
 		// The goal state
@@ -131,6 +136,13 @@ public class A_Star {
 			State.endBoard = endBoard;
 		}
 
+		/*	getBoardSize
+		 *	returns board size. Used to get board size in Validator class
+		 */
+		public static short getBoardSize() {
+			return BOARD_SIZE;
+		}
+
 		/* heuristic
 		 * Calculates the heuristic function for this state.
 		 * Uses sum of distances from tiles to end locations
@@ -222,15 +234,16 @@ public class A_Star {
 	 * Validate and handle user input.
 	 */
 	protected static class Validator {
-		private static String inputPat = "^([0-8.,A-F]\\s+){8}[0-8.,A-F]$";
-		private static Pattern r = Pattern.compile(inputPat);
+		private static String inputPat15 = "^([0-9.,A-F]\\s+){15}[0-9.,A-F]$";
+		private static String inputPat8 = "^([0-8.]\\s+){8}[0-8.]$";
+		private static Pattern r = (State.getBoardSize() == 16) ? Pattern.compile(inputPat15) : Pattern.compile(inputPat8);
 		private static Matcher stringMatcher;
 
 		/* parse
 		 * Parses a string with the inputPat regex to confirm the user has adhered to the format.
 		 */
 		protected static Boolean parse(String input) {
-			stringMatcher= r.matcher(input);
+			stringMatcher = r.matcher(input);
 			if (!stringMatcher.find()){
 				return false;
 			}
