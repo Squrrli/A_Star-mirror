@@ -193,9 +193,12 @@ public class A_Star {
 		 */
 		@Override
 		public boolean equals(Object o) {
-
-			if(this.hashCode() == o.hashCode())
-				return true;
+			for(int i = 0; i < this.board.length; i++) {
+				if (this.board[i] == ((State) o).board[i])
+					return true;
+				else
+					break;
+			}
 			return false;
 		}
 
@@ -205,9 +208,10 @@ public class A_Star {
 		@Override
 		public int hashCode() {
 			int result = 0;
+			int itrMax = (this.board.length == 9) ? this.board.length : 8;
 
-			for(int i = 0; i < this.board.length; i++) {
-				result *= 10;
+			for(int i = 0; i < itrMax; i++) {
+				result *= this.board.length;
 				result += this.board[i];
 			}
 			return result;
@@ -240,8 +244,9 @@ public class A_Star {
 		private static short[] formatInput(String input){
 			String[] strArr = input.split("\\s+");
 			short[] shortArr = new short[strArr.length];
+			
 			for(int i = 0; i < shortArr.length; i++){
-				shortArr[i] = Short.parseShort( strArr[i] );
+				shortArr[i] = Short.parseShort( strArr[i], 16 );
 			}
 
 			return shortArr;
@@ -306,6 +311,7 @@ public class A_Star {
 
 		// Create starting State
 		State state_start = new State(null, board_start, 0);
+		State temp_start = new State(null, board_end, 0);
 
 		// Set up our sets
 		HashSet<State> seen = new HashSet<State>();
@@ -314,7 +320,6 @@ public class A_Star {
 		// Set up our starting state
 		seen.add(state_start);
 		open.add(state_start);
-
 
 		// Run A*
 	}
