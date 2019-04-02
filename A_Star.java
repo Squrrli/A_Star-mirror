@@ -281,10 +281,14 @@ public class A_Star {
 		/* getBoard
 		 * Takes the name of the board to show to the user ("Start"/"End") and returns a fully validated board.
 		 */
-		public static short[] getBoard(String name) {
+		public static short[] getBoard(String name, String level) {
+			String rules = "8";
+			if(level=="15 Puzzle")
+				rules = "9 and letters A through F"; // space saving boiiii
+
 			while(true) {
 				String input = JOptionPane.showInputDialog(null,
-					name + " State:\n* Numbers 0 through 8\n* In any order\n* Separated by spaces");
+					name + " State:\n* Numbers 0 through " + rules +"\n* In any order\n* Separated by spaces");
 				if(input == null) {
 					// The user hit "Cancel"
 					System.exit(0);
@@ -295,7 +299,7 @@ public class A_Star {
 				}
 				short[] output = formatInput(input);
 				if(containsDuplicates(output)) {
-					JOptionPane.showMessageDialog(null, "Must contain all numbers [0, 8] and cannot have duplicates. Try again.");
+					JOptionPane.showMessageDialog(null, "Must contain all numbers 0 through " + rules + ",\nand cannot have duplicates. \nTry again.");
 					continue;
 				}
 
@@ -323,8 +327,8 @@ public class A_Star {
 		State.BOARD_SIZE = (short)(State.BOARD_WIDTH * State.BOARD_HEIGHT);
 
 		// Get boards
-		short board_start[] = Validator.getBoard("Start");
-		short board_end[] = Validator.getBoard("End");
+		short board_start[] = Validator.getBoard("Start", response);
+		short board_end[] = Validator.getBoard("End", response);
 
 		// Set goal board
 		State.setEndBoard(board_end);
