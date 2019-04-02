@@ -163,6 +163,8 @@ public class A_Star {
 		public String toString() {
 			String output = "";
 			for(short i = 0; i < BOARD_SIZE; i++) {
+				if (BOARD_SIZE > 10 && board[i] < 10)
+				    output += ' ';
 				if (board[i] == 0)
 					output += ' ';
 				else
@@ -172,9 +174,6 @@ public class A_Star {
 					output += "\n";
 				else
 					output += " ";
-			}
-			for (short i = 0; i < (2 * BOARD_WIDTH) - 1; i++) {
-				output += '-';
 			}
 			output += "\n";
 			return output;
@@ -387,7 +386,7 @@ public class A_Star {
 			 }
 		}
 
-		System.out.println(temp.winPath());
+		System.out.print(temp.winPath());
 	}
 
 	/* getInversions
