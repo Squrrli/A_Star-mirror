@@ -199,13 +199,11 @@ public class A_Star {
 		 */
 		@Override
 		public boolean equals(Object o) {
-			for(int i = 0; i < this.board.length; i++) {
-				if (this.board[i] == ((State) o).board[i])
-					return true;
-				else
-					break;
+			for(int i = 0; i < BOARD_SIZE; i++) {
+				if (this.board[i] != ((State) o).board[i])
+					return false;
 			}
-			return false;
+			return true;
 		}
 
 		/*	hashCode
@@ -255,7 +253,6 @@ public class A_Star {
 			
 			for(int i = 0; i < shortArr.length; i++){
 				shortArr[i] = Short.parseShort( strArr[i], 16 );
-				System.out.println(shortArr[i]);
 			}
 
 			return shortArr;
@@ -314,7 +311,11 @@ public class A_Star {
 		// Determine 8 or 15 Puzzle
 		String options[] = {"8 Puzzle", "15 Puzzle"};
 		String response = (String)JOptionPane.showInputDialog(null, "Choose whether you would like to play the 8 Puzzle or the 15 puzzle", null, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-		if (response == options[0]) {
+		if (response == null) {
+		    // User clicked 'Cancel'
+		    System.exit(0);
+		}
+		else if (response == options[0]) {
 		    State.BOARD_WIDTH = State.BOARD_HEIGHT = 3;
 		} else {
 		    State.BOARD_WIDTH = State.BOARD_HEIGHT = 4;
@@ -340,25 +341,22 @@ public class A_Star {
 		open.add(state_start);
 
 		// Run A*
-		State temp;
-		ArrayList<State> nextTemp;
-		while( (open.peek()).getHeuristic() != 0){
-			 temp=open.peek();
+		State temp = open.poll();
+		while(temp.getHeuristic() != 0){
 			 for(State child : temp.getNextStates()){
 					if(!(seen.contains(child))){
 						 open.add(child);
 						 seen.add(child);
 					}
 			 }
-			 open.remove(temp);
-			 seen.add(temp);
 
-			 if(open.peek()==null){
+			 temp=open.poll();
+			 if(temp==null){
 			 	System.out.println("Search exhausted; Insolvable board.");
 			 	System.exit(0);
 			 }
 		}
 
-		System.out.println((open.peek()).winPath());
+		System.out.println(temp.winPath());
 	}
 }
