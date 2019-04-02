@@ -332,7 +332,6 @@ public class A_Star {
 
 		// Check if solvable
 		int inv = getInversions(board_start, board_end, State.BOARD_WIDTH);
-		System.out.println(inv);
 
 		// If board width is odd, no. of inversions must be even
 		if(State.BOARD_WIDTH % 2 != 0 && inv % 2 != 0){
@@ -390,7 +389,6 @@ public class A_Star {
 			for(short j = i; j < w * w; j++){
 				if(getArrayIndex(endBoard, startBoard[j]) > getArrayIndex(endBoard, startBoard[i])
 					&& startBoard[j] != 0 && startBoard[i] != 0){
-					System.out.println(startBoard[j] + " precedes " + startBoard[i]);
 					invCount++;
 				}
 			}
