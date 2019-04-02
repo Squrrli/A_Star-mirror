@@ -20,10 +20,6 @@ import java.util.ArrayDeque;
  * A*.
  */
 public class A_Star {
-//	public static final short BOARD_WIDTH = 4;
-//	public static final short BOARD_HEIGHT = 4;
-//	public static final short BOARD_SIZE = BOARD_WIDTH * BOARD_HEIGHT;
-
 
 	/* State
 	 * Holds a single state of the game, calculating future moves and keeping
@@ -31,9 +27,9 @@ public class A_Star {
 	 */
 	public static class State implements Comparable<State> {
 		// Board size constants
-		public static final short BOARD_WIDTH = 4;
-		public static final short BOARD_HEIGHT = 4;
-		public static final short BOARD_SIZE = BOARD_WIDTH * BOARD_HEIGHT;
+		public static short BOARD_WIDTH = 3;
+		public static short BOARD_HEIGHT = 3;
+		public static short BOARD_SIZE = (short) (BOARD_WIDTH * BOARD_HEIGHT);
 
 		// The goal state
 		static short[] endBoard;
@@ -136,13 +132,6 @@ public class A_Star {
 			State.endBoard = endBoard;
 		}
 
-		/*	getBoardSize
-		 *	returns board size. Used to get board size in Validator class
-		 */
-		public static short getBoardSize() {
-			return BOARD_SIZE;
-		}
-
 		/* heuristic
 		 * Calculates the heuristic function for this state.
 		 * Uses sum of distances from tiles to end locations
@@ -236,14 +225,15 @@ public class A_Star {
 	protected static class Validator {
 		private static String inputPat15 = "^([0-9.,A-F]\\s+){15}[0-9.,A-F]$";
 		private static String inputPat8 = "^([0-8.]\\s+){8}[0-8.]$";
-		private static Pattern r = (State.getBoardSize() == 16) ? Pattern.compile(inputPat15) : Pattern.compile(inputPat8);
+		private static Pattern r15 = Pattern.compile(inputPat15);
+		private static Pattern r8 = Pattern.compile(inputPat8);
 		private static Matcher stringMatcher;
 
 		/* parse
 		 * Parses a string with the inputPat regex to confirm the user has adhered to the format.
 		 */
 		protected static Boolean parse(String input) {
-			stringMatcher = r.matcher(input);
+			stringMatcher = (State.BOARD_SIZE == 16) ? r15.matcher(input) : r8.matcher(input);
 			if (!stringMatcher.find()){
 				return false;
 			}
@@ -260,6 +250,7 @@ public class A_Star {
 			
 			for(int i = 0; i < shortArr.length; i++){
 				shortArr[i] = Short.parseShort( strArr[i], 16 );
+				System.out.println(shortArr[i]);
 			}
 
 			return shortArr;
@@ -324,7 +315,6 @@ public class A_Star {
 
 		// Create starting State
 		State state_start = new State(null, board_start, 0);
-		State temp_start = new State(null, board_end, 0);
 
 		// Set up our sets
 		HashSet<State> seen = new HashSet<State>();
