@@ -164,7 +164,7 @@ public class A_Star {
 			String output = "";
 			for(short i = 0; i < BOARD_SIZE; i++) {
 				if (BOARD_SIZE > 10 && board[i] < 10)
-				    output += ' ';
+					 output += ' ';
 				if (board[i] == 0)
 					output += ' ';
 				else
@@ -337,7 +337,7 @@ public class A_Star {
 
 		// If board width is odd, no. of inversions must be even
 		if(State.BOARD_WIDTH % 2 != 0 && inv % 2 != 0){
-		    unsolvable();
+			 unsolvable();
 		}
 
 		if(State.BOARD_WIDTH % 2 == 0){
@@ -346,13 +346,13 @@ public class A_Star {
 					then the number of inversions in a solvable situation is odd.
 				If the blank is on an odd row counting from the bottom (last, third-last, fifth-last etc) 
 					then the number of inversions in a solvable situation is even.
-			 *
-			 */
-		    int zero_index = getArrayIndex(board_start, (short)0);
-		    int row = zero_index / State.BOARD_WIDTH;
-		    if((row % 2 == 0) != (inv % 2 == 0)) { // Its row and column parity must be opposites, per above description
+			*
+			*/
+			int zero_index = getArrayIndex(board_start, (short)0);
+			int row = zero_index / State.BOARD_WIDTH;
+			if((row % 2 == 0) != (inv % 2 == 0)) { // Its row and column parity must be opposites, per above description
 			unsolvable();
-		    }
+			 }
 		}
 
 		// Set goal board
@@ -423,7 +423,7 @@ public class A_Star {
 	 * Tells the user the board arrangement is unsolvable and exits the program.
 	 */
 	public static void unsolvable() {
-	    System.out.println("This puzzle is unsolvable.");
-	    System.exit(0);
+		 System.out.println("This puzzle is unsolvable.");
+		 System.exit(0);
 	}
 }
