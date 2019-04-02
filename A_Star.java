@@ -316,19 +316,39 @@ public class A_Star {
 		String options[] = {"8 Puzzle", "15 Puzzle"};
 		String response = (String)JOptionPane.showInputDialog(null, "Choose whether you would like to play the 8 Puzzle or the 15 puzzle", null, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		if (response == null) {
-		    // User clicked 'Cancel'
-		    System.exit(0);
+			 // User clicked 'Cancel'
+			 System.exit(0);
 		}
 		else if (response == options[0]) {
-		    State.BOARD_WIDTH = State.BOARD_HEIGHT = 3;
+			 State.BOARD_WIDTH = State.BOARD_HEIGHT = 3;
 		} else {
-		    State.BOARD_WIDTH = State.BOARD_HEIGHT = 4;
+			 State.BOARD_WIDTH = State.BOARD_HEIGHT = 4;
 		}
 		State.BOARD_SIZE = (short)(State.BOARD_WIDTH * State.BOARD_HEIGHT);
 
 		// Get boards
 		short board_start[] = Validator.getBoard("Start", response);
 		short board_end[] = Validator.getBoard("End", response);
+
+		// Check if solvable
+		int inv = getInversions(board_start, board_end, State.BOARD_WIDTH);
+		System.out.println(inv);
+
+		// If board width is odd, no. of inversions must be even
+		if(State.BOARD_WIDTH % 2 != 0 && inv % 2 != 0){
+			System.out.println("Puzzle is unsolvable, sorry!");
+			System.exit(0);
+		}
+
+		if(State.BOARD_WIDTH % 2 == 0){
+			/*
+				If the blank is on an even row counting from the bottom (second-last, fourth-last etc), 
+					then the number of inversions in a solvable situation is odd.
+				If the blank is on an odd row counting from the bottom (last, third-last, fifth-last etc) 
+					then the number of inversions in a solvable situation is even.
+			 *
+			 */
+		}
 
 		// Set goal board
 		State.setEndBoard(board_end);
@@ -356,11 +376,36 @@ public class A_Star {
 
 			 temp=open.poll();
 			 if(temp==null){
-			 	System.out.println("Search exhausted; Insolvable board.");
-			 	System.exit(0);
+				System.out.println("Search exhausted; Unsolvable board.");
+				System.exit(0);
 			 }
 		}
 
 		System.out.println(temp.winPath());
+	}
+
+	public static int getInversions(short[] startBoard, short[] endBoard, short w){
+		int invCount = 0;
+		for(short i = 0; i < w * w; i++){
+			for(short j = i; j < w * w; j++){
+				if(getArrayIndex(endBoard, startBoard[j]) > getArrayIndex(endBoard, startBoard[i])
+					&& startBoard[j] != 0 && startBoard[i] != 0){
+					System.out.println(startBoard[j] + " precedes " + startBoard[i]);
+					invCount++;
+				}
+			}
+		}
+		return invCount;
+	}
+
+	public static int getArrayIndex(short[] arr, short val){
+		int k=0;
+		for(int i=0;i<arr.length;i++){
+			if(arr[i]==val){
+				 k=i;
+				 break;
+			}
+		}
+		return k;
 	}
 }
