@@ -222,7 +222,7 @@ public class A_Star {
 	 * Validate and handle user input.
 	 */
 	protected static class Validator {
-		private static String inputPat = "^([0-8.]\\s+){8}[0-8.]$";
+		private static String inputPat = "^([0-8.,A-F]\\s+){8}[0-8.,A-F]$";
 		private static Pattern r = Pattern.compile(inputPat);
 		private static Matcher stringMatcher;
 
