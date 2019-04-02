@@ -176,9 +176,15 @@ public class A_Star {
 			for (short i = 0; i < (2 * BOARD_WIDTH) - 1; i++) {
 				output += '-';
 			}
-			output += "\nh: " + heuristic + "\n";
+			output += "\n";
 			return output;
 		}
+
+		public String winPath(){
+				 if(this.prev != null)
+						return (this.prev).winPath() + this.toString();
+				 return this.toString();
+			}
 
 		/* compareTo
 		 * Necessary to implement Comparable, which is in turn necessary to be used in a PriorityQueue.
@@ -334,5 +340,25 @@ public class A_Star {
 		open.add(state_start);
 
 		// Run A*
+		State temp;
+		ArrayList<State> nextTemp;
+		while( (open.peek()).getHeuristic() != 0){
+			 temp=open.peek();
+			 for(State child : temp.getNextStates()){
+					if(!(seen.contains(child))){
+						 open.add(child);
+						 seen.add(child);
+					}
+			 }
+			 open.remove(temp);
+			 seen.add(temp);
+
+			 if(open.peek()==null){
+			 	System.out.println("Search exhausted; Insolvable board.");
+			 	System.exit(0);
+			 }
+		}
+
+		System.out.println((open.peek()).winPath());
 	}
 }
