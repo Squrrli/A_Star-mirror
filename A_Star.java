@@ -367,10 +367,12 @@ public class A_Star {
 					then the number of inversions in a solvable situation is even.
 			*
 			*/
-			int zero_index = getArrayIndex(board_start, (short)0);
-			int row = zero_index / State.BOARD_WIDTH;
-			if((row % 2 == 0) != (inv % 2 == 0)) { // Its row and column parity must be opposites, per above description
-			unsolvable();
+			int start_zero_index = getArrayIndex(board_start, (short)0);
+			int end_zero_index = getArrayIndex(board_end, (short)0);
+			int start_zero_row = start_zero_index / State.BOARD_WIDTH;
+			int end_zero_row = end_zero_index / State.BOARD_WIDTH;
+			if((start_zero_row % 2 == end_zero_row % 2) == (inv % 2 == 0)) { // Its row and column parity must be opposites, per above description
+				unsolvable();
 			}
 		}
 
