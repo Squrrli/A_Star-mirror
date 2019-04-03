@@ -161,21 +161,40 @@ public class A_Star {
 		 */
 		@Override
 		public String toString() {
-			String output = "";
+			String output = " ";
+			String horiLine = "\u2501\u2501\u2501\u2501";
+			for(int j = 0; j < BOARD_WIDTH; j++){
+				if(j == BOARD_WIDTH-1)
+					output += horiLine.substring(0, horiLine.offsetByCodePoints(0,3));
+				else
+					output += horiLine;
+			}
+			if(BOARD_SIZE > 10)
+				output += horiLine;
+			output+="\n";
 			for(short i = 0; i < BOARD_SIZE; i++) {
+				output += "\u2503";
 				if (BOARD_SIZE > 10 && board[i] < 10)
 					 output += ' ';
 				if (board[i] == 0)
-					output += ' ';
+					output += "   ";
 				else
-					output += board[i];
+					output += " " + board[i] + " ";
 
-				if (i%BOARD_WIDTH == BOARD_WIDTH - 1)
-					output += "\n";
-				else
-					output += " ";
+				if (i%BOARD_WIDTH == BOARD_WIDTH - 1){
+					output += "\u2503\n ";
+					for(int j = 0; j < BOARD_WIDTH; j++){
+						if(j == BOARD_WIDTH-1)
+							output += horiLine.substring(0, horiLine.offsetByCodePoints(0,3));
+						else
+							output += horiLine;
+					}
+					if(BOARD_SIZE > 10)
+						output += horiLine;
+					output+="\n";
+				}
 			}
-			output += "\n";
+			output += "\n\n";
 			return output;
 		}
 
