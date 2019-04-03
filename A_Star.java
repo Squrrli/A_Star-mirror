@@ -161,9 +161,8 @@ public class A_Star {
 		 */
 		@Override
 		public String toString() {
-			String output = "";
+			String output = "\n";
 			String horiLine = "";
-
 			for (int i = 0; i < BOARD_WIDTH - 1; i++)
 				horiLine+="\u2501";
 
