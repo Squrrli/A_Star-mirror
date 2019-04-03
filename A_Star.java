@@ -175,7 +175,7 @@ public class A_Star {
 			for(short i = 0; i < BOARD_SIZE; i++) {
 				output += "\u2503";
 				if (BOARD_SIZE > 10 && board[i] < 10)
-					 output += ' ';
+					output += ' ';
 				if (board[i] == 0)
 					output += "   ";
 				else
@@ -202,9 +202,9 @@ public class A_Star {
 		 * Recursively prints the path from the root node to this State.
 		 */
 		public String winPath(){
-				 if(this.prev != null)
-						return (this.prev).winPath() + this.toString();
-				 return this.toString();
+				if(this.prev != null)
+					return (this.prev).winPath() + this.toString();
+				return this.toString();
 			}
 
 		/* compareTo
@@ -338,12 +338,12 @@ public class A_Star {
 		String response = (String)JOptionPane.showInputDialog(null, "Choose whether you would like to play the 8 Puzzle or the 15 puzzle", null, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		if (response == null) {
 			 // User clicked 'Cancel'
-			 System.exit(0);
+			System.exit(0);
 		}
 		else if (response == options[0]) {
-			 State.BOARD_WIDTH = State.BOARD_HEIGHT = 3;
+			State.BOARD_WIDTH = State.BOARD_HEIGHT = 3;
 		} else {
-			 State.BOARD_WIDTH = State.BOARD_HEIGHT = 4;
+			State.BOARD_WIDTH = State.BOARD_HEIGHT = 4;
 		}
 		State.BOARD_SIZE = (short)(State.BOARD_WIDTH * State.BOARD_HEIGHT);
 
@@ -356,7 +356,7 @@ public class A_Star {
 
 		// If board width is odd, no. of inversions must be even
 		if(State.BOARD_WIDTH % 2 != 0 && inv % 2 != 0){
-			 unsolvable();
+			unsolvable();
 		}
 
 		if(State.BOARD_WIDTH % 2 == 0){
@@ -371,7 +371,7 @@ public class A_Star {
 			int row = zero_index / State.BOARD_WIDTH;
 			if((row % 2 == 0) != (inv % 2 == 0)) { // Its row and column parity must be opposites, per above description
 			unsolvable();
-			 }
+			}
 		}
 
 		// Set goal board
@@ -389,23 +389,28 @@ public class A_Star {
 		open.add(state_start);
 
 		// Run A*
-		State temp = open.poll();
-		while(temp.getHeuristic() != 0){
-			 for(State child : temp.getNextStates()){
-					if(!(seen.contains(child))){
-						 open.add(child);
-						 seen.add(child);
-					}
-			 }
+		try {
+			State temp = open.poll();
+			while(temp.getHeuristic() != 0){
+				for(State child : temp.getNextStates()){
+						if(!(seen.contains(child))){
+							open.add(child);
+							seen.add(child);
+						}
+				}
 
-			 temp=open.poll();
-			 if(temp==null){
-				System.out.println("Search exhausted; Unsolvable board.");
-				System.exit(0);
-			 }
+				temp=open.poll();
+				if(temp==null){
+					System.out.println("Search exhausted; Unsolvable board.");
+					System.exit(0);
+				}
+			}
+			System.out.print(temp.winPath());
+
+		} catch (OutOfMemoryError e) {
+			System.out.println("Error: Out of Memory, puzzle is solvable.");
+			System.exit(0);
 		}
-
-		System.out.print(temp.winPath());
 	}
 
 	/* getInversions
@@ -431,8 +436,8 @@ public class A_Star {
 		int k=-1;
 		for(int i=0;i<arr.length;i++){
 			if(arr[i]==val){
-				 k=i;
-				 break;
+				k=i;
+				break;
 			}
 		}
 		return k;
@@ -442,7 +447,7 @@ public class A_Star {
 	 * Tells the user the board arrangement is unsolvable and exits the program.
 	 */
 	public static void unsolvable() {
-		 System.out.println("This puzzle is unsolvable.");
-		 System.exit(0);
+		System.out.println("This puzzle is unsolvable.");
+		System.exit(0);
 	}
 }
