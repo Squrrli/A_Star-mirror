@@ -30,31 +30,32 @@ class A_StarTest {
 
     @Test
     @DisplayName("Validator.parse(): Input string too long")
-    void tooManyInputArgs(){
-      if(A_Star.State.BOARD_SIZE == 9)
-          assertFalse(A_Star.Validator.parse("1 2 3 4 5 6 7 8 9 0"));
-      else
-          assertFalse(A_Star.Validator.parse("1 2 3 4 5 6 7 A 8 9 0 A B C D E F"));
+    void tooManyInputArgs() {
+        if(A_Star.State.BOARD_SIZE == 9)
+            assertFalse(A_Star.Validator.parse("1 2 3 4 5 6 7 8 9 0"));
+        else
+            assertFalse(A_Star.Validator.parse("1 2 3 4 5 6 7 A 8 9 0 A B C D E F"));
     }
 
     @Test
     @DisplayName("Validator.parse(): Input value > max value")
     void inputValueOutOfBounds1(){
-//        A_Star.State.BOARD_SIZE = 9;
-        assertFalse(A_Star.Validator.parse("1 2 3 4 5 6 7 8 9"));
-        assertFalse(A_Star.Validator.parse("1 0 3 4 5 6 7 8 22"));
-
-//        A_Star.State.BOARD_SIZE = 16;
-        assertFalse(A_Star.Validator.parse("1 2 3 4 5 6 7 8 9 0 A B C D E X"));
-        assertFalse(A_Star.Validator.parse("1 0 3 4 5 6 7 8 9 0 A BB C D E F"));
+        if(A_Star.BOARD_SIZE == 9) {
+            assertFalse(A_Star.Validator.parse("1 2 3 4 5 6 7 8 9"));
+            assertFalse(A_Star.Validator.parse("1 0 3 4 5 6 7 8 22"));
+        } else {
+            assertFalse(A_Star.Validator.parse("1 2 3 4 5 6 7 8 9 0 A B C D E X"));
+            assertFalse(A_Star.Validator.parse("1 0 3 4 5 6 7 8 9 0 A BB C D E F"));
+        }
     }
 
     @Test
     @DisplayName("Validator.parse(): Input value < 0(minimum value)")
     void inputValueOutOfBounds2(){
-//        A_Star.State.BOARD_SIZE = 9;
-        assertFalse(A_Star.Validator.parse("1 -2 3 4 5 6 7 8 0"));
-        assertFalse(A_Star.Validator.parse("1 -2 3 4 5 6 7 8 9 0 A B C D E F"));
+        if(A_Star.BOARD_SIZE == 9)
+            assertFalse(A_Star.Validator.parse("1 -2 3 4 5 6 7 8 0"));
+        else
+            assertFalse(A_Star.Validator.parse("1 -2 3 4 5 6 7 8 9 0 A B C D E F"));
     }
 
     /* Validator.containsDuplicates()
