@@ -161,37 +161,31 @@ public class A_Star {
 		 */
 		@Override
 		public String toString() {
-			String output = " ";
-			String horiLine = "\u2501\u2501\u2501\u2501";
-			for(int j = 0; j < BOARD_WIDTH; j++){
-				if(j == BOARD_WIDTH-1)
-					output += horiLine.substring(0, horiLine.offsetByCodePoints(0,3));
-				else
-					output += horiLine;
-			}
-			if(BOARD_SIZE > 10)
-				output += horiLine;
-			output+="\n";
+			String output = "";
+			String horiLine = "";
+
+			for (int i = 0; i < BOARD_WIDTH - 1; i++)
+				horiLine+="\u2501";
+
 			for(short i = 0; i < BOARD_SIZE; i++) {
-				output += "\u2503";
+				if (i % BOARD_WIDTH != 0)
+					output += "\u2503";
 				if (BOARD_SIZE > 10 && board[i] < 10)
-					output += ' ';
+				    output += ' ';
 				if (board[i] == 0)
 					output += "   ";
 				else
 					output += " " + board[i] + " ";
 
-				if (i%BOARD_WIDTH == BOARD_WIDTH - 1){
-					output += "\u2503\n ";
-					for(int j = 0; j < BOARD_WIDTH; j++){
-						if(j == BOARD_WIDTH-1)
-							output += horiLine.substring(0, horiLine.offsetByCodePoints(0,3));
-						else
-							output += horiLine;
+				if (i % BOARD_WIDTH == BOARD_WIDTH - 1 && i / BOARD_WIDTH != BOARD_WIDTH - 1){
+					output += "\n ";
+					for (int j = 0; j < BOARD_WIDTH; j++){
+						if (j != 0)
+							output += "\u2501";
+						if (j != BOARD_WIDTH-1)
+							output += horiLine + "\u254B";
 					}
-					if(BOARD_SIZE > 10)
-						output += horiLine;
-					output+="\n";
+					output += horiLine.substring(0, horiLine.offsetByCodePoints(0,BOARD_WIDTH-2)) + "\n";
 				}
 			}
 			output += "\n\n";
